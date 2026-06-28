@@ -5,6 +5,7 @@ module gruntmanesMetode {
 
     requires javafx.controls;
     requires javafx.fxml;
+	requires javafx.graphics;
     
     // This allows FXMLLoader and Graphics to open files inside this package!
     opens profpaligs to javafx.fxml, javafx.graphics;

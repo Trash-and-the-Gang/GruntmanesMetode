@@ -4,6 +4,23 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import org.junit.jupiter.api.Test;
 
 class matrixCalculatorTest {
+	
+	@Test
+	void testMatrixGenerating() {
+		
+		matrixGenerator generator = new matrixGenerator();
+		
+		@SuppressWarnings("unused")
+		float[][] matrix = generator.generateMatrix(5, 4, 2.4f, 2.5f, 5);
+		
+//		for (float[] fs : matrix) {
+//			for (float element : fs) {
+//				System.out.print(element + " ");
+//			}
+//			System.out.println();
+//		}
+	}
+	
 
     @Test
     void testMatrixAdditionSuccess() {
