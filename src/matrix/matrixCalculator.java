@@ -1,6 +1,6 @@
 package matrix;
 
-public class matrixCalculator {
+public class MatrixCalculator {
 	
 	/**
      * Performs a binary operation (Addition, Subtraction, Multiplication) on two matrices.

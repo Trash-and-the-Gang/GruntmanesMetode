@@ -2,7 +2,7 @@ package matrix;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class matrixGenerator {
+public class MatrixGenerator {
 	/**
      * Performs matrix generation
      *

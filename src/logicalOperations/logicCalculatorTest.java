@@ -2,14 +2,14 @@ package logicalOperations;
 
 import org.junit.jupiter.api.Test;
 
-class logicCalculatorTest {
+class LogicCalculatorTest {
 
     @Test
     void test() {
-        logicalCalculator calculator = new logicalCalculator();
+        LogicalCalculator calculator = new LogicalCalculator();
 
         // Act
-        String[][] result = calculator.LogicCalculator("(a & b <=> c => d (g <=>w)) =>l | !l");
+        String[][] result = calculator.LogicCalculator("a");
         
         for (String[] strings : result) {
 			for (String string : strings) {
@@ -17,5 +17,15 @@ class logicCalculatorTest {
 			}
 			System.out.println();
 		}
+    }
+    
+    
+    @Test
+    void testGeneration() {
+    	LogicGenerator generator = new LogicGenerator();
+    	
+    	String result = generator.generateLogic(6, 7, 0, 2);
+    	
+    	System.out.println(result);
     }
 }

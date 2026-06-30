@@ -3,12 +3,12 @@ package matrix;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import org.junit.jupiter.api.Test;
 
-class matrixCalculatorTest {
+class MatrixCalculatorTest {
 	
 	@Test
 	void testMatrixGenerating() {
 		
-		matrixGenerator generator = new matrixGenerator();
+		MatrixGenerator generator = new MatrixGenerator();
 		
 		@SuppressWarnings("unused")
 		float[][] matrix = generator.generateMatrix(5, 4, 2.4f, 2.5f, 5);
@@ -25,7 +25,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixAdditionSuccess() {
         // 1. Arrange: Instantiate the calculator and set up 2x2 matrices
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f},
@@ -50,7 +50,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixSubstractionSuccess() {
         // 1. Arrange: Instantiate the calculator and set up 2x2 matrices
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f},
@@ -75,7 +75,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixMultiplicationSuccess() {
         // 1. Arrange: Instantiate the calculator and set up 2x2 matrices
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f},
@@ -100,7 +100,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixMultiplicationDifrentSizeSuccess() {
         // 1. Arrange: Instantiate the calculator and set up 2x2 matrices
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f},
@@ -132,7 +132,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixTransponingSuccess() {
         // 1. Arrange: Instantiate the calculator and set up 2x2 matrices
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f},
@@ -161,7 +161,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixTransponingDifrenSizeSuccess() {
         // 1. Arrange: Instantiate the calculator and set up 2x2 matrices
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f,},
@@ -189,7 +189,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixDeterminant2x2Success() {
         // 1. Arrange: Instantiate the calculator and set up a 2x2 matrix
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {3.0f, 8.0f},
@@ -211,7 +211,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixDeterminant3x3Success() {
         // 1. Arrange: Instantiate the calculator and set up a 3x3 matrix
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {6.0f, 1.0f, 1.0f},
@@ -233,7 +233,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixMultiplicationIncompatibleSizes() {
         // 1. Arrange: Instantiate the calculator with mismatched inner dimensions
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         // m1 is 2x3, m2 is 2x2 (3 columns vs 2 rows -> Invalid)
         float[][] m1 = {
@@ -255,7 +255,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixDeterminantNonSquareMatrix() {
         // 1. Arrange: Create a non-square 2x3 matrix
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f, 3.0f},
@@ -271,7 +271,7 @@ class matrixCalculatorTest {
     
     @Test
     void testMatrixAdditionIncompatibleSizes() {
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         // m1 is 2x2, m2 is 3x2 (different rows)
         float[][] m1 = { {1.0f, 2.0f}, {3.0f, 4.0f} };
@@ -287,7 +287,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixAdjugateSuccess() {
         // 1. Arrange: Set up a 2x2 matrix
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f},
@@ -309,7 +309,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixInverseSuccess() {
         // 1. Arrange: Set up an invertible 2x2 matrix
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f},
@@ -331,7 +331,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixInverseSingularMatrix() {
         // 1. Arrange: Set up a matrix with a determinant of 0 (singular matrix)
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f},
@@ -348,7 +348,7 @@ class matrixCalculatorTest {
     @Test
     void testMatrixInverseNonSquare() {
         // 1. Arrange: Set up a non-square matrix (2x3)
-        matrixCalculator calculator = new matrixCalculator();
+        MatrixCalculator calculator = new MatrixCalculator();
         
         float[][] m1 = {
             {1.0f, 2.0f, 3.0f},

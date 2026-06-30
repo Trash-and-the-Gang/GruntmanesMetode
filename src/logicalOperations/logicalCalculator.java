@@ -2,7 +2,7 @@ package logicalOperations;
 
 import java.util.*;
 
-public class logicalCalculator {
+public class LogicalCalculator {
 
     // --- 1. TREE NODE DEFINITIONS ---
     interface Node {
