@@ -17,9 +17,9 @@ public class Main extends Application {
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("PROFPalīgs");
         primaryStage.setFullScreenExitHint("Pilnekrāna režīms. Lai izietu, spied ESC");
-        primaryStage.setResizable(false);
-        primaryStage.setMinWidth(640);
-        primaryStage.setMinHeight(480);
+        primaryStage.setResizable(true);
+        primaryStage.setMinWidth(800);
+        primaryStage.setMinHeight(600);
         
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
