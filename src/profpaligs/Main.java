@@ -16,11 +16,12 @@ public class Main extends Application {
         
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("PROFPalīgs");
-        primaryStage.setResizable(false);
         primaryStage.setFullScreenExitHint("Pilnekrāna režīms. Lai izietu, spied ESC");
+        primaryStage.setResizable(true);
+        primaryStage.setMinWidth(800);
+        primaryStage.setMinHeight(600);
         
-        
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
     }
 
