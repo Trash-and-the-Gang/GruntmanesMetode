@@ -34,16 +34,18 @@ public class LogicalCalculator {
             switch (op) {
                 case '&': return l && r;
                 case '|': return l || r;
-                case '>': return !l || r;      // implication: A => B
-                case '=': return l == r;       // biconditional: A <=> B
+                case '>': return !l || r;      // implication: A → B
+                case '=': return l == r;       // biconditional: A ↔ B
                 default: throw new IllegalStateException("Unknown operator: " + op);
             }
         }
         public String toString() {
             String symbol;
             switch (op) {
-                case '>': symbol = "=>"; break;
-                case '=': symbol = "<=>"; break;
+                case '&': symbol = "∧"; break;
+                case '|': symbol = "∨"; break;
+                case '>': symbol = "→"; break;
+                case '=': symbol = "↔"; break;
                 default: symbol = String.valueOf(op);
             }
             return "(" + left.toString() + " " + symbol + " " + right.toString() + ")";
@@ -139,17 +141,18 @@ public class LogicalCalculator {
         return new ArrayList<>(vars);
     }
 
-    // Converts the multi-character operators "<=>" and "=>" into single internal
-    // tokens ('=' and '>' respectively) so the rest of the char-based parser can
-    // keep working unmodified. Order matters: "<=>" must be replaced before "=>",
-    // since "=>" is a substring of "<=>".
+    // Maps your formal logic symbols down to single internal tokens 
+    // so the rest of the stack-based math parser can evaluate them seamlessly.
     private String normalizeOperators(String expr) {
-        return expr.replace("<=>", "=").replace("=>", ">");
+        return expr.replace("↔", "=")
+                   .replace("→", ">")
+                   .replace("∧", "&")
+                   .replace("∨", "|");
     }
 
     private String infixToPostfix(String infix) {
         // Standard logic-operator precedence, highest to lowest:
-        // NOT (!) > AND (&) > OR (|) > IMPLIES (=>, internal '>') > IFF (<=>, internal '=')
+        // NOT (!) > AND (&) > OR (|) > IMPLIES (→, internal '>') > IFF (↔, internal '=')
         Map<Character, Integer> precedence = Map.of('!', 5, '&', 4, '|', 3, '>', 2, '=', 1);
         StringBuilder output = new StringBuilder();
         Stack<Character> stack = new Stack<>();
