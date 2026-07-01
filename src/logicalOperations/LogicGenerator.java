@@ -2,6 +2,8 @@ package logicalOperations;
 
 import java.util.Random;
 
+import messageHandler.MessageType;
+
 public class LogicGenerator {
 	
 	/**
@@ -22,7 +24,8 @@ public class LogicGenerator {
 	public String generateLogic(int numberOfOperations, int variables, int amoutOfNegations, int amoutOfParanthesis) {
 		
 		if(variables > numberOfOperations + 1) {
-			//TODO: error message: impossable to create because you cant have variables > number of operations + 1
+			messageHandler.MessageHandler.showMessage("Impossible to create because you can't have variables > number of operations + 1", MessageType.Error);
+			return "";
 		}
 		
 		if(variables > 52) {
