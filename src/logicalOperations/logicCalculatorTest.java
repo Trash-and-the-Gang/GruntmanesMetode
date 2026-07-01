@@ -30,7 +30,6 @@ class LogicCalculatorTest {
     	
     	LogicalCalculator calculator = new LogicalCalculator();
 
-    	// Act
     	String[][] resultCalc = calculator.LogicCalculator(result);
       
     	for (String[] strings : resultCalc) {
