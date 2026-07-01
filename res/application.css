@@ -1,0 +1,56 @@
+.root{
+	-dark-green: #111c16;
+	-dark-blue: #111c1c;
+	
+	-dark-blue-1: #1d2121;
+	-dark-blue-2: #2d3333;
+	
+	-dark-red: #281c1d;
+	-dark-red-1: #402d2f;
+	
+	-light-red: #59252b;
+	
+	-light-blue: #e0feff;
+	-light-green: #c9ffc7;
+	-light-green-1: #2d3832;
+}
+
+.gradient-background{
+	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, -dark-green, -dark-blue);
+}
+
+.btn{
+	-fx-background-color: -dark-blue-1;
+	-fx-text-fill: -light-blue;
+	-fx-border-color: -dark-blue-2;
+	-fx-border-radius: 8px;
+	-fx-background-radius: 8px;
+	-fx-margin: 10px;
+}
+
+.btn:hover{
+    -fx-border-color: -light-green;
+	-fx-text-fill: -light-green;
+	
+	-fx-background-color: -light-green-1;
+}
+
+#exit{
+	-fx-background-color: -dark-red;
+	-fx-border-color: -dark-red-1;
+}
+
+#exit:hover{
+	-fx-background-color: -dark-red-1;
+	-fx-border-color: red;
+	-fx-text-fill: red;
+}
+
+.btn:selected{ /* nestrādā for some reason */
+	-fx-border-color: -light-green;
+	-fx-text-fill: -light-green;
+}
+
+.left-aside{
+	-fx-background-color:
+}
