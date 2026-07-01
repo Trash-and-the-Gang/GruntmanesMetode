@@ -6,6 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import localization.Localization;
+
+import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -56,6 +60,8 @@ public class MessageHandler {
 	        Platform.runLater(() -> showMessage(textToDisplay, type));
 	        return;
 	    }
+	    
+	    ResourceBundle lang = Localization.returnBundle();
 
 	    try {
 	        FXMLLoader loader = new FXMLLoader(MessageHandler.class.getResource("Handler.fxml"));
@@ -71,10 +77,10 @@ public class MessageHandler {
 	        stage.setResizable(false);
 	        
 	        switch(type) {
-	        	case Error -> stage.setTitle("Kļūdas paziņojums");
-	        	case Warning -> stage.setTitle("Brīdinājuma paziņojums");
-	        	case Info -> stage.setTitle("Info paziņojums");
-	        	case Success -> stage.setTitle("Veiksmes paziņojums");
+	        	case Error -> stage.setTitle(lang.getString("title.error"));
+	        	case Warning -> stage.setTitle(lang.getString("title.warning"));
+	        	case Info -> stage.setTitle(lang.getString("title.info"));
+	        	case Success -> stage.setTitle(lang.getString("title.success"));
 	        }
 	        
 	        stage.setScene(new Scene(root));

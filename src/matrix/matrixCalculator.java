@@ -1,5 +1,7 @@
 package matrix;
 
+import messageHandler.MessageType;
+
 public class MatrixCalculator {
 	
 	/**
@@ -26,10 +28,9 @@ public class MatrixCalculator {
 			if(matrix1_collumn == matrix2_row) {
 				return multiplyMatrix(matrix1, matrix2, matrix1_row, matrix2_collumn);
 			}else {
-				//TODO: error message popup
+				messageHandler.MessageHandler.showMessage("Nav iespējams", MessageType.Error);
+				return null;
 			}
-			break;
-		
 		case "+":
 			if(matrix1_row == matrix2_row) {
 				if(matrix1_collumn == matrix2_collumn) {

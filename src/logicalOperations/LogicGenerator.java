@@ -1,7 +1,9 @@
 package logicalOperations;
 
 import java.util.Random;
+import java.util.ResourceBundle;
 
+import localization.Localization;
 import messageHandler.MessageType;
 
 public class LogicGenerator {
@@ -23,14 +25,36 @@ public class LogicGenerator {
 	
 	public String generateLogic(int numberOfOperations, int variables, int amoutOfNegations, int amoutOfParanthesis) {
 		
-		if(variables > numberOfOperations + 1) {
-			messageHandler.MessageHandler.showMessage("Impossible to create because you can't have variables > number of operations + 1", MessageType.Error);
-			return "";
-		}
+		ResourceBundle lang = Localization.returnBundle();
 		
-		if(variables > 52) {
-			//TODO: error message: impossable to create because the maximum allowed is 52
-			
+		if (variables > numberOfOperations + 1) {
+		    messageHandler.MessageHandler.showMessage(lang.getString("message.error.variable_overflow"), MessageType.Error);
+		    return "";
+		}
+
+		if (variables > 52) {
+		    messageHandler.MessageHandler.showMessage(lang.getString("message.error.variable_limit"), MessageType.Error);
+		    return "";
+		}
+
+		if (variables < 1) {
+		    messageHandler.MessageHandler.showMessage(lang.getString("message.error.variables_underflow"), MessageType.Error);
+		    return "";
+		}
+
+		if (numberOfOperations < 0) {
+		    messageHandler.MessageHandler.showMessage(lang.getString("message.error.operations_underflow"), MessageType.Error);
+		    return "";
+		}
+
+		if (amoutOfNegations < 0) {
+		    messageHandler.MessageHandler.showMessage(lang.getString("message.error.negations_underflow"), MessageType.Error);
+		    return "";
+		}
+
+		if (amoutOfParanthesis < 0) {
+		    messageHandler.MessageHandler.showMessage(lang.getString("message.error.parenthesis_underflow"), MessageType.Error);
+		    return "";
 		}
 		
 		usedParentheses = 0;

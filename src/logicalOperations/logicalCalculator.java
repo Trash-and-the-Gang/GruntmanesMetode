@@ -54,6 +54,11 @@ public class LogicalCalculator {
 
     // --- 2. MAIN CALCULATOR METHOD ---
     public String[][] LogicCalculator(String fullLogic) {
+    	
+    	if(fullLogic == "") {
+    		return null;
+    	}
+    	
         String expression = normalizeOperators(fullLogic.replaceAll("\\s+", ""));
         
         // Find base variables

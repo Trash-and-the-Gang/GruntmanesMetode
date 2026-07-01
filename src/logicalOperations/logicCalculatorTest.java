@@ -36,7 +36,7 @@ class LogicCalculatorTest {
     void testGeneration() {
     	LogicGenerator generator = new LogicGenerator();
     	
-    	String result = generator.generateLogic(1, 3, 1, 2);
+    	String result = generator.generateLogic(4, 30, 7, 20);
     	
     	System.out.println(result);
     	
