@@ -1,6 +1,8 @@
 package logicalOperations;
 
 import java.util.*;
+import localization.Localization;
+import messageHandler.MessageType;
 
 public class LogicalCalculator {
 
@@ -54,19 +56,29 @@ public class LogicalCalculator {
 
     // --- 2. MAIN CALCULATOR METHOD ---
     public String[][] LogicCalculator(String fullLogic) {
-    	
-    	if(fullLogic == "") {
-    		return null;
-    	}
+        ResourceBundle lang = Localization.returnBundle();
+        
+        // 1. Guard against empty inputs
+        if (fullLogic == null || fullLogic.strip().isEmpty()) {
+            messageHandler.MessageHandler.showMessage(lang.getString("message.error.empty_input"), MessageType.Error);
+            return null;
+        }
     	
         String expression = normalizeOperators(fullLogic.replaceAll("\\s+", ""));
         
-        // Find base variables
+        // 2. Validate basic expression syntax rules
+        if (!isExpressionSyntaxValid(expression, lang)) {
+            return null; // Stop calculation immediately if a popup was shown
+        }
+        
         List<Character> variables = getUniqueVariables(expression);
         Collections.sort(variables);
 
-        // Build the AST Root
-        Node root = buildAST(expression);
+        // 3. Build AST with tracking to guarantee no unexpected parser crashes
+        Node root = buildAST(expression, lang);
+        if (root == null) {
+            return null; // Stop calculation immediately if a structural popup was shown
+        }
 
         // Gather all sub-expressions by traversing the tree
         List<Node> subExpressions = new ArrayList<>();
@@ -106,22 +118,81 @@ public class LogicalCalculator {
     }
 
     // --- 3. PARSING & HELPER METHODS ---
-    private Node buildAST(String expression) {
-        String postfix = infixToPostfix(expression);
+    private boolean isExpressionSyntaxValid(String expr, ResourceBundle lang) {
+        int bracketCount = 0;
+        char prev = ' ';
+
+        for (int i = 0; i < expr.length(); i++) {
+            char ch = expr.charAt(i);
+
+            if (ch == '(') bracketCount++;
+            if (ch == ')') bracketCount--;
+            
+            if (bracketCount < 0) {
+                messageHandler.MessageHandler.showMessage(lang.getString("error.validation.unmatched_brackets"), MessageType.Error);
+                return false;
+            }
+
+            // Check for consecutive variables (e.g., AB instead of A & B)
+            if (Character.isLetter(ch) && Character.isLetter(prev)) {
+                messageHandler.MessageHandler.showMessage(lang.getString("error.validation.invalid_character"), MessageType.Error);
+                return false;
+            }
+            
+            // Check for duplicate binary operators (e.g., A && B)
+            if ("&|>=".indexOf(ch) != -1 && "&|>=".indexOf(prev) != -1) {
+                messageHandler.MessageHandler.showMessage(lang.getString("error.validation.invalid_character"), MessageType.Error);
+                return false;
+            }
+
+            prev = ch;
+        }
+
+        if (bracketCount != 0) {
+            messageHandler.MessageHandler.showMessage(lang.getString("error.validation.unmatched_brackets"), MessageType.Error);
+            return false;
+        }
+
+        return true;
+    }
+
+    private Node buildAST(String expression, ResourceBundle lang) {
+        String postfix = infixToPostfix(expression, lang);
+        if (postfix == null) return null; // An error was already popped up inside conversion
+        
         Stack<Node> stack = new Stack<>();
 
-        for (char ch : postfix.toCharArray()) {
-            if (Character.isLetter(ch)) {
-                stack.push(new VariableNode(ch));
-            } else if (ch == '!') {
-                stack.push(new NotNode(stack.pop()));
-            } else if (ch == '&' || ch == '|' || ch == '>' || ch == '=') {
-                Node right = stack.pop();
-                Node left = stack.pop();
-                stack.push(new BinaryOpNode(ch, left, right));
+        try {
+            for (char ch : postfix.toCharArray()) {
+                if (Character.isLetter(ch)) {
+                    stack.push(new VariableNode(ch));
+                } else if (ch == '!') {
+                    if (stack.isEmpty()) {
+                        messageHandler.MessageHandler.showMessage(lang.getString("error.validation.invalid_character"), MessageType.Error);
+                        return null;
+                    }
+                    stack.push(new NotNode(stack.pop()));
+                } else if (ch == '&' || ch == '|' || ch == '>' || ch == '=') {
+                    if (stack.size() < 2) {
+                        messageHandler.MessageHandler.showMessage(lang.getString("error.validation.invalid_character"), MessageType.Error);
+                        return null;
+                    }
+                    Node right = stack.pop();
+                    Node left = stack.pop();
+                    stack.push(new BinaryOpNode(ch, left, right));
+                }
             }
+            
+            if (stack.size() != 1) {
+                messageHandler.MessageHandler.showMessage(lang.getString("error.validation.invalid_character"), MessageType.Error);
+                return null;
+            }
+            return stack.pop();
+            
+        } catch (Exception e) {
+            messageHandler.MessageHandler.showMessage(lang.getString("error.validation.invalid_character"), MessageType.Error);
+            return null;
         }
-        return stack.pop();
     }
 
     private void gatherSubExpressions(Node node, List<Node> list) {
@@ -132,7 +203,6 @@ public class LogicalCalculator {
             gatherSubExpressions(((BinaryOpNode) node).left, list);
             gatherSubExpressions(((BinaryOpNode) node).right, list);
         }
-        // Unique tracking based on string representation
         if (list.stream().noneMatch(n -> n.toString().equals(node.toString()))) {
             list.add(node);
         }
@@ -146,8 +216,6 @@ public class LogicalCalculator {
         return new ArrayList<>(vars);
     }
 
-    // Maps your formal logic symbols down to single internal tokens 
-    // so the rest of the stack-based math parser can evaluate them seamlessly.
     private String normalizeOperators(String expr) {
         return expr.replace("↔", "=")
                    .replace("→", ">")
@@ -155,9 +223,7 @@ public class LogicalCalculator {
                    .replace("∨", "|");
     }
 
-    private String infixToPostfix(String infix) {
-        // Standard logic-operator precedence, highest to lowest:
-        // NOT (!) > AND (&) > OR (|) > IMPLIES (→, internal '>') > IFF (↔, internal '=')
+    private String infixToPostfix(String infix, ResourceBundle lang) {
         Map<Character, Integer> precedence = Map.of('!', 5, '&', 4, '|', 3, '>', 2, '=', 1);
         StringBuilder output = new StringBuilder();
         Stack<Character> stack = new Stack<>();
@@ -169,11 +235,12 @@ public class LogicalCalculator {
                 stack.push(ch);
             } else if (ch == ')') {
                 while (!stack.isEmpty() && stack.peek() != '(') output.append(stack.pop());
+                if (stack.isEmpty()) {
+                    messageHandler.MessageHandler.showMessage(lang.getString("error.validation.unmatched_brackets"), MessageType.Error);
+                    return null;
+                }
                 stack.pop();
             } else if (precedence.containsKey(ch)) {
-                // '!' is right-associative (unary prefix), so equal-precedence '!' on the
-                // stack must NOT be popped by another incoming '!' — only strictly higher
-                // precedence operators get popped in that case. '&' and '|' stay left-associative.
                 while (!stack.isEmpty() && stack.peek() != '(' &&
                        (precedence.get(stack.peek()) > precedence.get(ch) ||
                         (precedence.get(stack.peek()) == precedence.get(ch) && ch != '!'))) {
@@ -182,7 +249,14 @@ public class LogicalCalculator {
                 stack.push(ch);
             }
         }
-        while (!stack.isEmpty()) output.append(stack.pop());
+        while (!stack.isEmpty()) {
+            char popped = stack.pop();
+            if (popped == '(' || popped == ')') {
+                messageHandler.MessageHandler.showMessage(lang.getString("error.validation.unmatched_brackets"), MessageType.Error);
+                return null;
+            }
+            output.append(popped);
+        }
         return output.toString();
     }
 }

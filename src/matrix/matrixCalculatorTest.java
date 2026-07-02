@@ -1,9 +1,23 @@
 package matrix;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javafx.application.Platform;
+
 class MatrixCalculatorTest {
+	
+	@BeforeAll
+    static void initJavaFX() {
+        // This force-starts the JavaFX background thread safely
+        try {
+            Platform.startup(() -> {});
+        } catch (IllegalStateException e) {
+            // Already initialized, we can safely ignore this
+        }
+    }
 	
 	@Test
 	void testMatrixGenerating() {
