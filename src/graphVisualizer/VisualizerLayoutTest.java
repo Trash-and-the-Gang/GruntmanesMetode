@@ -1,6 +1,12 @@
 package graphVisualizer;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.concurrent.CountDownLatch;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
@@ -14,10 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.CountDownLatch;
 
 public class VisualizerLayoutTest {
 
@@ -32,13 +34,22 @@ public class VisualizerLayoutTest {
 
     @Test
     public void testFullAppLayoutIntegration() throws InterruptedException {
+//    	Random rand = new Random();
         int[][] testMatrix = {
-            {1, 1, 1, 0, 1},
+            {0, 1, 1, 0, 1},
             {1, 0, 0, 0, 0},
             {0, 1, 1, 0, 0},
             {0, 0, 0, 1, 0},
             {1, 0, 0, 0, 0}
         };
+        
+//        int[][] testMatrix = new int[6][6];
+//        
+//        for(int i = 0; i < testMatrix.length; i ++) {
+//        	for(int j = 0; j < testMatrix.length; j++) {
+//        		testMatrix[i][j] = rand.nextInt(2);
+//        	}
+//        }
 
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -118,7 +129,7 @@ public class VisualizerLayoutTest {
             assertNotNull(mainLayout.getRight(), "Control panel should be configured on the right side.");
             assertNotNull(mainLayout.getCenter(), "The logging area must occupy the center pane.");
 
-            System.out.println("✅ Full Layout Integration Test Passed successfully!");
+            System.out.println("Full Layout Integration Test Passed successfully!");
 
   
         });

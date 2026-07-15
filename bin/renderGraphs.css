@@ -16,7 +16,7 @@
 
 .graph-node:hover {
     -fx-fill: #60a5fa;
-    -fx-cursor: hand; /* This works beautifully in JavaFX CSS! */
+    -fx-cursor: hand; /* This works beautifully in JavaFX CSS! <- Litterly didnt work :) */ 
 }
 
 /* Style for the node text labels */
@@ -35,4 +35,4 @@
 /* Style for arrowheads and loops */
 .graph-arrow {
     -fx-fill: #a1a8b8;
-}
+}/

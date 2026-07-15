@@ -1,5 +1,7 @@
 package graphVisualizer;
 
+import java.util.ResourceBundle;
+
 import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
@@ -9,6 +11,8 @@ import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
+import localization.Localization;
+import messageHandler.MessageType;
 
 public class AdjacencyMatrixVisualizer extends Pane {
 
@@ -32,6 +36,22 @@ public class AdjacencyMatrixVisualizer extends Pane {
     }
     
     public AdjacencyMatrixVisualizer(int[][] matrix) {
+    	
+		ResourceBundle lang = Localization.returnBundle();
+ 
+    	
+    	if(matrix == null || matrix.length == 0) {
+			messageHandler.MessageHandler.showMessage(lang.getString("message.error.invalid_adjacent_matrix_null"), MessageType.Error);
+			throw new IllegalArgumentException("Matrix cannot be null or empty.");
+    	}
+    	
+    	for(int i = 0; i < matrix.length; i++) {
+    		if(matrix[i] == null || matrix[i].length != matrix.length) {
+    			messageHandler.MessageHandler.showMessage(lang.getString("message.error.invalid_adjacent_matrix_dimensions"), MessageType.Error);
+    			throw new IllegalArgumentException("Matrix must be square.");
+    		}
+    	}
+    	
     	this.matrix = matrix;
     	
     	//loads in css from external file
