@@ -109,7 +109,7 @@ public class MatrixCalculator {
 	
     //Calculations options
 	
-    public float[][] adjugateMatrix(float[][] matrix, int rows, int cols) {
+    private float[][] adjugateMatrix(float[][] matrix, int rows, int cols) {
         float[][] cofactorMatrix = new float[rows][cols];
 	    
         for (int i = 0; i < rows; i++) {
@@ -124,7 +124,7 @@ public class MatrixCalculator {
         return transponeMatrix(cofactorMatrix, rows, cols);
     }
 	
-    public float determinantMatrix(float[][] matrix) {
+    private float determinantMatrix(float[][] matrix) {
         int n = matrix.length;
 	    
         if (n == 1) {
