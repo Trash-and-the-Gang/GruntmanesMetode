@@ -1,0 +1,38 @@
+/* Style for our main visualizer canvas */
+.graph-canvas {
+    -fx-background-color: #1e1e24;
+    -fx-border-color: #00adb5;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Style for the graph nodes */
+.graph-node {
+    -fx-fill: #2f80ed;
+    -fx-stroke: #1a51a6;
+    -fx-stroke-width: 2px;
+}
+
+.graph-node:hover {
+    -fx-fill: #60a5fa;
+    -fx-cursor: hand; /* This works beautifully in JavaFX CSS! */
+}
+
+/* Style for the node text labels */
+.node-label {
+    -fx-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* Style for the edge lines */
+.graph-edge {
+    -fx-stroke: #a1a8b8;
+    -fx-stroke-width: 2.5px;
+}
+
+/* Style for arrowheads and loops */
+.graph-arrow {
+    -fx-fill: #a1a8b8;
+}
